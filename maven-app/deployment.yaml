@@ -6,7 +6,6 @@ metadata:
       [{"from":{"kind":"ImageStreamTag","name":"maven-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"maven-app\")].image"}]
     openshift.io/generated-by: OpenShiftNewApp
   name: maven-app
-  namespace: dev
   labels:
     app: maven-app
     app.kubernetes.io/component: maven-app
@@ -38,6 +37,24 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: IfNotPresent
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
