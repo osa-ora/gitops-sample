@@ -43,4 +43,31 @@ spec:
 Try to change the replica count in the deployment.yaml file and check how it will auto-sync this into the deployed application.
 
 
+Create Dotnet sample application GitOps configurations as well
+
+```
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dotnet-app-gitops
+  namespace: dev
+spec:
+  destination:
+    namespace: dev
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dotnet-app
+    repoURL: 'https://github.com/osa-ora/gitops-sample'
+    targetRevision: main
+  syncPolicy:
+    automated: {}
+```
+
+<img width="1320" alt="Screen Shot 2022-01-09 at 16 24 37" src="https://user-images.githubusercontent.com/18471537/148686483-326019b4-37b0-4274-81c2-c5b3beafe694.png">
+
+
+Try to change replica count, delete the deployments, services and routes and sync these applications again and see how this will be reflected.
+
+
 
