@@ -2,9 +2,6 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   annotations:
-    image.openshift.io/triggers: >-
-      [{"from":{"kind":"ImageStreamTag","name":"maven-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"maven-app\")].image"}]
-    openshift.io/generated-by: OpenShiftNewApp
   name: maven-app
   labels:
     app: maven-app
