@@ -54,9 +54,6 @@ spec:
             failureThreshold: 3
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
-      securityContext: {}
-      schedulerName: default-scheduler
   strategy:
     type: RollingUpdate
     rollingUpdate:
