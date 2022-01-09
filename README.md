@@ -37,7 +37,7 @@ spec:
     automated: {}
 ```
 
-<img width="1657" alt="Screen Shot 2022-01-09 at 16 00 22" src="https://user-images.githubusercontent.com/18471537/148685410-da06acc3-fe2e-40a6-82ee-c9e0300ba61b.png">
+<img width="1787" alt="Screen Shot 2022-01-09 at 16 11 52" src="https://user-images.githubusercontent.com/18471537/148685944-bd82f8e2-a012-4e24-935e-06887016878e.png">
 
 
 Try to change the replica count in the deployment.yaml file and check how it will auto-sync this into the deployed application.
