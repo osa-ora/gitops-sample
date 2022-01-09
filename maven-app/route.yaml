@@ -10,7 +10,6 @@ metadata:
   annotations:
     openshift.io/host.generated: 'true'
 spec:
-  host: maven-app-dev.apps.cluster-d9af.d9af.sandbox575.opentlc.com
   to:
     kind: Service
     name: maven-app
