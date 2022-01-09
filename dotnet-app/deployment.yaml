@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: dotnet-app
     app.kubernetes.io/instance: dotnet-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       deployment: dotnet-app
@@ -16,8 +16,6 @@ spec:
     metadata:
       labels:
         deployment: dotnet-app
-      annotations:
-        openshift.io/generated-by: OpenShiftNewApp
     spec:
       containers:
         - resources: {}
@@ -50,9 +48,6 @@ spec:
             image-registry.openshift-image-registry.svc:5000/dev/dotnet-app
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
-      securityContext: {}
-      schedulerName: default-scheduler
   strategy:
     type: RollingUpdate
     rollingUpdate:
