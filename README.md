@@ -4,17 +4,22 @@ This is a sample GitOps project where you can use ArgoCD to synch and apply all 
 
 To run this demo you need to provision ArgoCD operator, once installed, you need to install ArgoCD instance. 
 Give it a name such as argocd-sample 
+Enable 
+
+<img width="837" alt="Screen Shot 2022-01-10 at 09 27 37" src="https://user-images.githubusercontent.com/18471537/148730783-ecac6590-ce5e-44a1-98a3-3d3e015346fa.png">
+In Dex section, Enable OpenShift OAuth.  
+
 In RBAC section, add the following policy:
 ```
 g, systems:cluster-admins, role:admin
 ```
 
-Get the password for the admin user from the secret: argocd instance name - cluster for example: argocd-sample-cluster
+Now, you can login using OpenShift or get the password for the admin user from the secret: argocd instance name - cluster for example: argocd-sample-cluster
 
 <img width="1481" alt="Screen Shot 2022-01-09 at 15 50 59" src="https://user-images.githubusercontent.com/18471537/148685061-0e4a0abd-9de4-420a-95d2-155fc6ee6e2d.png">
 
 
-Click on the route and Login to ArgoCD instance using admin/{password}. 
+Click on the route and Login to ArgoCD instance using either OpenShift or admin/{password}. 
 
 Create new application and configure it as following: either from GUI or from the Operator. 
 
