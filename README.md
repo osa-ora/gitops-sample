@@ -18,6 +18,10 @@ It requires the following:
 - OC and tkn command installed.
 - Slack channel webhook URL as a parameter to send the notification into this channel
 
+```
+./dev-ops-script.sh https://hooks.slack.com/....
+```
+
 Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift, and once installed, you need to provision an ArgoCD instance. 
 Give it a name such as argocd-sample 
 In Dex section, Enable OpenShift OAuth.  
