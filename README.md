@@ -2,12 +2,27 @@
 
 This is a sample GitOps project where you can use ArgoCD to synch and apply all Git repository configuration and operations into OpenShift/Kubernetes cluster.
 
-To run this demo you need to provision ArgoCD operator, once installed, you need to install ArgoCD instance. 
+Note: You need to install the applications and pipelines using the script "dev-ops-script.sh" in the setup-demo folder. 
+This demo will install the following tools:
+- Dev & CICD OpenShift projects
+- Jenkins instance
+- SonarQube instance
+- Gitea Template
+- Nexus Repository instance
+- Two Tekton pipelines
+- Execute both Tekton pipelines
+
+It requires the following:
+- Login to OpenShift cluster usng oc login command
+- OpenShift with Tekton Pipeline installed
+- OC and tkn command installed.
+- Slack channel webhook URL as a parameter to send the notification into this channel
+
+Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift, and once installed, you need to provision an ArgoCD instance. 
 Give it a name such as argocd-sample 
-Enable 
+In Dex section, Enable OpenShift OAuth.  
 
 <img width="837" alt="Screen Shot 2022-01-10 at 09 27 37" src="https://user-images.githubusercontent.com/18471537/148730783-ecac6590-ce5e-44a1-98a3-3d3e015346fa.png">
-In Dex section, Enable OpenShift OAuth.  
 
 In RBAC section, add the following policy:
 ```
@@ -23,23 +38,9 @@ Click on the route and Login to ArgoCD instance using either OpenShift or admin/
 
 Create new application and configure it as following: either from GUI or from the Operator. 
 
+
 ```
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: maven-app-gitops
-  namespace: dev
-spec:
-  destination:
-    namespace: dev
-    server: 'https://kubernetes.default.svc'
-  project: default
-  source:
-    path: maven-app
-    repoURL: 'https://github.com/osa-ora/gitops-sample'
-    targetRevision: main
-  syncPolicy:
-    automated: {}
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/maven-app-gitops.yaml
 ```
 
 <img width="1787" alt="Screen Shot 2022-01-09 at 16 11 52" src="https://user-images.githubusercontent.com/18471537/148685944-bd82f8e2-a012-4e24-935e-06887016878e.png">
@@ -51,22 +52,8 @@ Try to change the replica count in the deployment.yaml file and check how it wil
 Create Dotnet sample application GitOps configurations as well
 
 ```
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: dotnet-app-gitops
-  namespace: dev
-spec:
-  destination:
-    namespace: dev
-    server: 'https://kubernetes.default.svc'
-  project: default
-  source:
-    path: dotnet-app
-    repoURL: 'https://github.com/osa-ora/gitops-sample'
-    targetRevision: main
-  syncPolicy:
-    automated: {}
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml
+
 ```
 
 <img width="1320" alt="Screen Shot 2022-01-09 at 16 24 37" src="https://user-images.githubusercontent.com/18471537/148686483-326019b4-37b0-4274-81c2-c5b3beafe694.png">
