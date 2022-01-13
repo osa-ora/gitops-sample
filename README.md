@@ -23,42 +23,52 @@ It requires the following:
 ```
 
 Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift, and once installed, you need to provision an ArgoCD instance. 
-Give it a name such as argocd-sample 
-In Dex section, Enable OpenShift OAuth.  
+Give it a name such as argocd
 
-<img width="837" alt="Screen Shot 2022-01-10 at 09 27 37" src="https://user-images.githubusercontent.com/18471537/148730783-ecac6590-ce5e-44a1-98a3-3d3e015346fa.png">
-
-In RBAC section, add the following policy:
-```
-g, systems:cluster-admins, role:admin
-```
-
-Now, you can login using OpenShift or get the password for the admin user from the secret: argocd instance name - cluster for example: argocd-sample-cluster
+Now, get the password for the admin user from the secret: argocd instance name - cluster for example: argocd-cluster
 
 <img width="1481" alt="Screen Shot 2022-01-09 at 15 50 59" src="https://user-images.githubusercontent.com/18471537/148685061-0e4a0abd-9de4-420a-95d2-155fc6ee6e2d.png">
 
 
 Click on the route and Login to ArgoCD instance using either OpenShift or admin/{password}. 
+Make sure OC & Argocd commands are installed and execute the following commands:
+```
+oc login .....
+argocd cluster list
+//it will show the current cluster, we can use argocd cluster add ==> to add any new managed cluster and namespaces to this argocd instance
+```
+To insall our applications, execute the following commands: 
 
-Create new application and configure it as following: either from GUI or from the Operator. 
+```
+argocd app create maven-app --repo=https://github.com/osa-ora/gitops-sample --path=maven-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
 
+argocd app create dotnet-app --repo=https://github.com/osa-ora/gitops-sample --path=dotnet-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
+```
+
+Alternatively, we can use:
 
 ```
 oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/maven-app-gitops.yaml
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml
+
 ```
+Or even create it from the GUI/YAML from the Operator or ArgoCD GUI.
+
+You'll get an error that this 'dev' namespace is not managed, to fix it, from the command line we can use the "argocd cluster add" command, or from the GUI go to the current cluster and add the 'dev' namespace.
+
+<img width="1382" alt="Screen Shot 2022-01-13 at 09 50 46" src="https://user-images.githubusercontent.com/18471537/149287961-2b5796e1-1255-4815-9930-5eed4863dc6d.png">
+
+Then add a role binding to the dev namespace that allows the "argocd-application-controller" service user to manage the resources in dev namespace.
+
+<img width="747" alt="Screen Shot 2022-01-13 at 09 53 22" src="https://user-images.githubusercontent.com/18471537/149288343-78e7fd2d-5b09-4741-a1f2-7d87170e566f.png">
+
+Now, the argocd will be able to manage the applications in 'dev' namespace.
 
 <img width="1787" alt="Screen Shot 2022-01-09 at 16 11 52" src="https://user-images.githubusercontent.com/18471537/148685944-bd82f8e2-a012-4e24-935e-06887016878e.png">
 
 
 Try to change the replica count in the deployment.yaml file and check how it will auto-sync this into the deployed application.
 
-
-Create Dotnet sample application GitOps configurations as well
-
-```
-oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml
-
-```
 
 <img width="1320" alt="Screen Shot 2022-01-09 at 16 24 37" src="https://user-images.githubusercontent.com/18471537/148686483-326019b4-37b0-4274-81c2-c5b3beafe694.png">
 
