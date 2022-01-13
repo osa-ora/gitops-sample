@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: dotnet-app-gitops
-  namespace: dev
+  namespace: cicd
 spec:
   destination:
     namespace: dev
