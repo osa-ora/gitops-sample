@@ -59,7 +59,7 @@ You'll get an error that this 'dev' namespace is not managed, to fix it, from th
 
 <img width="1382" alt="Screen Shot 2022-01-13 at 09 50 46" src="https://user-images.githubusercontent.com/18471537/149287961-2b5796e1-1255-4815-9930-5eed4863dc6d.png">
 
-Then add a role binding to the dev namespace that allows the "argocd-application-controller" service user to manage the resources in dev namespace.
+Then add a role binding to the dev namespace that allows the "argocd-application-controller" service account (in cicd namespace) to manage the resources in dev namespace.
 
 <img width="747" alt="Screen Shot 2022-01-13 at 09 53 22" src="https://user-images.githubusercontent.com/18471537/149288343-78e7fd2d-5b09-4741-a1f2-7d87170e566f.png">
 
@@ -76,5 +76,5 @@ Try to change the replica count in the deployment.yaml file and check how it wil
 
 Try to change replica count, delete the deployments, services and routes and sync these applications again and see how this will be reflected.
 
-Note: You might need to force the argocd to replace the deployment object to avoid the out of sync issue when the image name has the SHA signature.
+Note: You might need to force the argocd to replace the deployment object to avoid the out of sync issue when the image name has the SHA signature, as GitOps practise, you need always to update the Git reposiotiry with your image details to be the source of truth for your applications.
 
