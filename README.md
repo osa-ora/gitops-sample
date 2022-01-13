@@ -75,5 +75,5 @@ Try to change the replica count in the deployment.yaml file and check how it wil
 
 Try to change replica count, delete the deployments, services and routes and sync these applications again and see how this will be reflected.
 
-
+Note: You might need to force the argocd to replace the deployment object to avoid the out of sync issue when the image name has the SHA signature.
 
