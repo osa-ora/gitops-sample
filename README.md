@@ -37,8 +37,9 @@ Make sure OC & Argocd commands are installed and execute the following commands:
 oc login .....
 argocd cluster list
 //it will show the current cluster, we can use argocd cluster add ==> to add any new managed cluster and namespaces to this argocd instance
+//for example: argocd cluster add $(oc config current-context) --name=argocd-managed --in-cluster --system-namespace=cicd --namespace=dev
 ```
-To insall our applications, execute the following commands: 
+Now, insall our applications by executing the following commands: 
 
 ```
 argocd app create maven-app-gitops --repo=https://github.com/osa-ora/gitops-sample --path=maven-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
@@ -68,13 +69,11 @@ Now, the argocd will be able to manage the applications in 'dev' namespace.
 <img width="1787" alt="Screen Shot 2022-01-09 at 16 11 52" src="https://user-images.githubusercontent.com/18471537/148685944-bd82f8e2-a012-4e24-935e-06887016878e.png">
 
 
-Try to change the replica count in the deployment.yaml file and check how it will auto-sync this into the deployed application.
+Try to change the replica count in the deployment.yaml file or delete some resources like deployment/service/route and check how it will auto or manaullay synched this into the deployed application.
 
 
 <img width="1320" alt="Screen Shot 2022-01-09 at 16 24 37" src="https://user-images.githubusercontent.com/18471537/148686483-326019b4-37b0-4274-81c2-c5b3beafe694.png">
 
-
-Try to change replica count, delete the deployments, services and routes and sync these applications again and see how this will be reflected.
 
 Note: You might need to force the argocd to replace the deployment object to avoid the out of sync issue when the image name has the SHA signature, as GitOps practise, you need always to update the Git reposiotiry with your image details to be the source of truth for your applications.
 
