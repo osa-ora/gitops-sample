@@ -14,8 +14,4 @@ spec:
       targetPort: 8080
   selector:
     deployment: maven-app
-  type: ClusterIP
   sessionAffinity: None
-  ipFamilies:
-    - IPv4
-  ipFamilyPolicy: SingleStack
