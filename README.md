@@ -1,4 +1,4 @@
-# gitops-sample
+# Building GitOps Sample Applications using ArgoCD
 
 This is a sample GitOps project where you can use ArgoCD to synch and apply all Git repository configuration and operations into OpenShift/Kubernetes cluster.
 
@@ -85,6 +85,15 @@ argocd proj create apps -s https://github.com/osa-ora/gitops-sample -d https://k
 argocd app set maven-app-gitops --project apps 
 argocd app set dotnet-app-gitops --project apps
 
+//list projects and applications using argocd command
+argocd proj list
+argocd proj get apps
+argocd app list
+argocd app get dotnet-app-gitops
+argocd app get maven-app-gitops
+//or sync apps from command line
+argocd app sync maven-app-gitops
+argocd app sync dotnet-app-gitops
 ```
 
 <img width="986" alt="Screen Shot 2022-01-13 at 10 45 01" src="https://user-images.githubusercontent.com/18471537/149296220-bebdb38a-854f-4a86-b21b-656825a9f03f.png">
