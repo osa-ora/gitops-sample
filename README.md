@@ -41,9 +41,9 @@ argocd cluster list
 To insall our applications, execute the following commands: 
 
 ```
-argocd app create maven-app --repo=https://github.com/osa-ora/gitops-sample --path=maven-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
+argocd app create maven-app-gitops --repo=https://github.com/osa-ora/gitops-sample --path=maven-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
 
-argocd app create dotnet-app --repo=https://github.com/osa-ora/gitops-sample --path=dotnet-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
+argocd app create dotnet-app-gitops --repo=https://github.com/osa-ora/gitops-sample --path=dotnet-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
 ```
 
 Alternatively, we can use:
@@ -78,3 +78,14 @@ Try to change replica count, delete the deployments, services and routes and syn
 
 Note: You might need to force the argocd to replace the deployment object to avoid the out of sync issue when the image name has the SHA signature, as GitOps practise, you need always to update the Git reposiotiry with your image details to be the source of truth for your applications.
 
+Now, instead of using the default project, we can create our own project and add all our applications into it:
+The project needs the source repository allowed, we can open it for any reposiotry using * and the destination which can be also opened or restricted to specific destination:
+
+```
+argocd proj create apps -s https://github.com/osa-ora/gitops-sample -d https://kubernetes.default.svc,dev
+argocd app set maven-app-gitops --project apps 
+argocd app set dotnet-app-gitops --project apps
+
+```
+
+<img width="986" alt="Screen Shot 2022-01-13 at 10 45 01" src="https://user-images.githubusercontent.com/18471537/149296220-bebdb38a-854f-4a86-b21b-656825a9f03f.png">
