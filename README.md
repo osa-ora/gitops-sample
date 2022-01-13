@@ -22,7 +22,8 @@ It requires the following:
 ./dev-ops-script.sh https://hooks.slack.com/....
 ```
 
-Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift, and once installed, you need to provision an ArgoCD instance. 
+Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift, and once installed, you need to provision an ArgoCD instance in the cicd namespace.
+
 Give it a name such as argocd
 
 Now, get the password for the admin user from the secret: argocd instance name - cluster for example: argocd-cluster
