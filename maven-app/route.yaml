@@ -10,6 +10,7 @@ metadata:
   annotations:
     openshift.io/host.generated: 'true'
 spec:
+  path: /loyalty/v1/balance/123
   to:
     kind: Service
     name: maven-app
