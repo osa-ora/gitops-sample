@@ -18,8 +18,8 @@ oc new-project $2
 
 echo "Create Jenkins …"  
 oc new-app jenkins-persistent  -p MEMORY_LIMIT=2Gi  -p VOLUME_CAPACITY=4Gi -n $2
-oc policy add-role-to-user edit system:serviceaccount:$2:default -n $2
-oc policy add-role-to-user edit system:serviceaccount:$2:jenkins -n $2
+oc policy add-role-to-user edit system:serviceaccount:$2:default -n $1
+oc policy add-role-to-user edit system:serviceaccount:$2:jenkins -n $1
 
 echo "Create SonarQube …" 
 oc process -f https://raw.githubusercontent.com/osa-ora/simple_java_maven/main/cicd/sonarqube-persistent-template.yaml | oc create -f - -n $2
