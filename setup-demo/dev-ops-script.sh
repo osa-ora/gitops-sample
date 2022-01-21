@@ -67,7 +67,7 @@ metadata:
   name: webhook-secret
   namespace: $2
 stringData:
-  url: $1" | oc create -f -
+  url: $3" | oc create -f -
 
 oc policy add-role-to-user edit system:serviceaccount:$2:pipeline -n $1
 
