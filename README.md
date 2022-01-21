@@ -61,6 +61,13 @@ You'll get an error that this 'dev' namespace is not managed, to fix it, from th
 
 <img width="1382" alt="Screen Shot 2022-01-13 at 09 50 46" src="https://user-images.githubusercontent.com/18471537/149287961-2b5796e1-1255-4815-9930-5eed4863dc6d.png">
 
+From the command line you can execute the following command: 
+
+```
+argocd cluster add $(oc config current-context) --name=argocd-managed --in-cluster --system-namespace=cicd --namespace=dev
+```
+If this command was succssful, then you can now proceed with GitOps demo, otherwise you can manually create the following role binding:  
+
 Then add a role binding to the dev namespace that allows the "argocd-application-controller" service account (in cicd namespace) to manage the resources in dev namespace.
 
 <img width="747" alt="Screen Shot 2022-01-13 at 09 53 22" src="https://user-images.githubusercontent.com/18471537/149288343-78e7fd2d-5b09-4741-a1f2-7d87170e566f.png">
