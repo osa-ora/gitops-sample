@@ -17,9 +17,10 @@ It requires the following:
 - OpenShift with Tekton Pipeline installed
 - OC and tkn command installed.
 - Slack channel webhook URL as a parameter to send the notification into this channel
+- dev & cicd project to use
 
 ```
-./dev-ops-script.sh https://hooks.slack.com/....
+./dev-ops-script.sh dev cicd https://hooks.slack.com/....
 ```
 
 Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift, and once installed, you need to provision an ArgoCD instance in the cicd namespace.
@@ -50,8 +51,8 @@ argocd app create dotnet-app-gitops --repo=https://github.com/osa-ora/gitops-sam
 Alternatively, we can use:
 
 ```
-oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/maven-app-gitops.yaml
-oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/maven-app-gitops.yaml -n cicd
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml -n cicd
 
 ```
 Or even create it from the GUI/YAML from the Operator or ArgoCD GUI.
