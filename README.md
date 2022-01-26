@@ -54,7 +54,7 @@ oc label namespace dev argocd.argoproj.io/managed-by=openshift-gitops
 //Add role binding to the user argocd-argocd-application-controller so argocd can manage the dev namespace
 oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/role-binding-for-dev.yaml
 ```
-Now, insall our argocd applications by executing the following commands: 
+Now, install our argocd applications by executing the following commands: 
 
 ```
 argocd app create maven-app-gitops --repo=https://github.com/osa-ora/gitops-sample --path=maven-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
