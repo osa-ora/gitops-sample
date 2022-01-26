@@ -48,11 +48,16 @@ oc login .....
 //List all argocd managed clusters
 argocd cluster list
 //it will show the current cluster, we can use argocd cluster add ==> to add any new managed cluster and namespaces to this argocd instance
-//for example: argocd cluster add $(oc config current-context) --name=argocd-managed --in-cluster --system-namespace=cicd --namespace=dev
+//for example: 
+argocd cluster add $(oc config current-context) --name=in-cluster --in-cluster --system-namespace=cicd --namespace=dev
 //label the dev namespace to be managed by argocd
 oc label namespace dev argocd.argoproj.io/managed-by=openshift-gitops
 //Add role binding to the user argocd-argocd-application-controller so argocd can manage the dev namespace
 oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/role-binding-for-dev.yaml
+//Note: you may need to delete one of the in-cluster from the GUI and add the namespace dev to the remaining one so the output looks like:
+argocd cluster list                                                                                           
+SERVER                                         NAME        VERSION  STATUS      MESSAGE  PROJECT
+https://kubernetes.default.svc (2 namespaces)  in-cluster  1.21     Successful
 ```
 Now, install our argocd applications by executing the following commands: 
 
