@@ -23,7 +23,14 @@ It requires the following:
 ./dev-ops-script.sh dev cicd https://hooks.slack.com/....
 ```
 
-Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift, and once installed, you need to provision an ArgoCD instance in the cicd namespace.
+Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift i.e. OpenShift GitOps Operator
+
+<img width="280" alt="Screen Shot 2022-01-26 at 09 14 59" src="https://user-images.githubusercontent.com/18471537/151119303-f8258a3e-65ab-4edb-9a48-b86a1e3243c9.png">
+
+
+Once installed, you need to provision an ArgoCD instance in the cicd namespace:
+
+<img width="1471" alt="Screen Shot 2022-01-26 at 09 16 23" src="https://user-images.githubusercontent.com/18471537/151119489-5c00c4e6-dc6b-4bb7-b0ae-73039902785c.png">
 
 Give it a name such as argocd
 
@@ -33,14 +40,21 @@ Now, get the password for the admin user from the secret: argocd instance name -
 
 
 Click on the route and Login to ArgoCD instance using either OpenShift or admin/{password}. 
+
 Make sure OC & Argocd commands are installed and execute the following commands:
 ```
+//login to OpenShift cluster
 oc login .....
+//List all argocd managed clusters
 argocd cluster list
 //it will show the current cluster, we can use argocd cluster add ==> to add any new managed cluster and namespaces to this argocd instance
 //for example: argocd cluster add $(oc config current-context) --name=argocd-managed --in-cluster --system-namespace=cicd --namespace=dev
+//label the dev namespace to be managed by argocd
+oc label namespace dev argocd.argoproj.io/managed-by=openshift-gitops
+//Add role binding to the user argocd-argocd-application-controller so argocd can manage the dev namespace
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/role-binding-for-dev.yaml
 ```
-Now, insall our applications by executing the following commands: 
+Now, insall our argocd applications by executing the following commands: 
 
 ```
 argocd app create maven-app-gitops --repo=https://github.com/osa-ora/gitops-sample --path=maven-app --dest-server=https://kubernetes.default.svc --dest-namespace=dev --sync-policy=auto
@@ -55,24 +69,8 @@ oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/
 oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml -n cicd
 
 ```
-Or even create it from the GUI/YAML from the Operator or ArgoCD GUI.
+Or even you can create them from the GUI/YAML from either the Operator or ArgoCD GUI.
 
-You'll get an error that this 'dev' namespace is not managed, to fix it, from the command line we can use the "argocd cluster add" command, or from the GUI go to the current cluster and add the 'dev' namespace.
-
-<img width="1382" alt="Screen Shot 2022-01-13 at 09 50 46" src="https://user-images.githubusercontent.com/18471537/149287961-2b5796e1-1255-4815-9930-5eed4863dc6d.png">
-
-From the command line you can execute the following command: 
-
-```
-argocd cluster add $(oc config current-context) --name=argocd-managed --in-cluster --system-namespace=cicd --namespace=dev
-```
-If this command was succssful, then you can now proceed with GitOps demo, otherwise you can manually create the following role binding:  
-
-Then add a role binding to the dev namespace that allows the "argocd-application-controller" service account (in cicd namespace) to manage the resources in dev namespace.
-
-<img width="747" alt="Screen Shot 2022-01-13 at 09 53 22" src="https://user-images.githubusercontent.com/18471537/149288343-78e7fd2d-5b09-4741-a1f2-7d87170e566f.png">
-
-Now, the argocd will be able to manage the applications in 'dev' namespace.
 
 <img width="1787" alt="Screen Shot 2022-01-09 at 16 11 52" src="https://user-images.githubusercontent.com/18471537/148685944-bd82f8e2-a012-4e24-935e-06887016878e.png">
 
