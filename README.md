@@ -32,7 +32,7 @@ Once installed, you need to provision an ArgoCD instance in the cicd namespace:
 
 <img width="1471" alt="Screen Shot 2022-01-26 at 09 16 23" src="https://user-images.githubusercontent.com/18471537/151119489-5c00c4e6-dc6b-4bb7-b0ae-73039902785c.png">
 
-Give it a name such as argocd
+Give it a name such as "argocd"
 
 Now, get the password for the admin user from the secret: argocd instance name - cluster for example: argocd-cluster
 
