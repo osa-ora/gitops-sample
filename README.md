@@ -20,7 +20,13 @@ It requires the following:
 - dev & cicd project to use
 
 ```
-./dev-ops-script.sh dev cicd https://hooks.slack.com/....
+//login to OpenShift cluster
+oc login ...
+//download the script
+curl https://raw.githubusercontent.com/osa-ora/gitops-sample/main/setup-demo/dev-ops-script.sh > dev-ops-script.sh
+chmod 777 dev-ops-script.sh
+//execute the script with the name of dev project and cicd project and slack channel webhook url
+./dev-ops-script.sh dev cicd https://hooks.slack.co...{fill in your slack url here}
 ```
 
 Now, in order to install the ArgoCD GitOps Demo you need to install ArgoCD operator in OpenShift i.e. OpenShift GitOps Operator
@@ -108,3 +114,10 @@ argocd app sync dotnet-app-gitops
 ```
 
 <img width="986" alt="Screen Shot 2022-01-13 at 10 45 01" src="https://user-images.githubusercontent.com/18471537/149296220-bebdb38a-854f-4a86-b21b-656825a9f03f.png">
+
+You can also install the sample serverless example :
+```
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/serverless-maven-app-gitops.yaml
+```
+
+
