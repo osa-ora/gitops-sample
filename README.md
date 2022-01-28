@@ -32,6 +32,20 @@ chmod 777 dev-ops-gitops-script.sh
 ./dev-ops-gitops-script.sh dev cicd https://hooks.slack.co...{fill in your slack url here}
 ```
 
+The pipelines will do the following: 
+- Git the code from the GitHub repository
+- Send slack message "Started"
+- Build the application
+- Run the unit testing
+- Run static code analysis (you need to configure the pipeline parameters against sonarqube project)
+- Package the application
+- Deploy it using s2i into the "dev" namespace (could be replaced by binary deployment instead)
+- Expose a route to the application
+- Run smoke testing (can be enriched to execute more test cases)
+- Send slack message "Completed"
+
+The pipeline accept many parameters to control the behaviour and switch on/off different steps e.g. run sonar qube or not.  
+
 Once the pipeline execution finished, you will have both applications "maven-app" and "dotnet-app" deployed in the "dev" namespace.
 
 <img width="1484" alt="Screen Shot 2022-01-27 at 20 44 56" src="https://user-images.githubusercontent.com/18471537/151423570-744a41ec-de9d-4381-b726-00ca93d47046.png">
