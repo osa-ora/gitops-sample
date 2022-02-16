@@ -88,6 +88,7 @@ argocd cluster add $(oc config current-context) --name=in-cluster --in-cluster -
 ```
 //label the dev namespace to be managed by argocd
 oc label namespace dev argocd.argoproj.io/managed-by=openshift-gitops
+oc label namespace cicd argocd.argoproj.io/managed-by=openshift-gitops
 
 //Add role binding to the user argocd-argocd-application-controller so argocd can manage the dev namespace
 oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/role-binding-for-dev.yaml
