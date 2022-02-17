@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: dotnet-app
     app.kubernetes.io/instance: dotnet-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       deployment: dotnet-app
