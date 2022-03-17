@@ -27,7 +27,7 @@ It requires the following:
 oc login ...
 //download the script
 curl https://raw.githubusercontent.com/osa-ora/gitops-sample/main/setup-demo/dev-ops-gitops-script.sh > dev-ops-gitops-script.sh
-chmod 777 dev-ops-gitops-script.sh
+chmod +x dev-ops-gitops-script.sh
 //execute the script with 3 parameters: the name of "dev" project, "cicd" project and slack channel webhook url
 ./dev-ops-gitops-script.sh dev cicd https://hooks.slack.co...{fill in your slack url here}
 ```
