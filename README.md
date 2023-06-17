@@ -64,7 +64,7 @@ Once installed, you need to provision an ArgoCD instance in the cicd namespace:
 
 <img width="1471" alt="Screen Shot 2022-01-26 at 09 16 23" src="https://user-images.githubusercontent.com/18471537/151119489-5c00c4e6-dc6b-4bb7-b0ae-73039902785c.png">
 
-Give it a name such as "argocd"
+Once provisioned, an instance of argocd will be provisioned in the "openshift-gitops" project/namespace.
 
 Now, get the password for the admin user from the secret: argocd instance name - cluster for example: argocd-cluster
 
@@ -84,6 +84,7 @@ argocd cluster list
 
 //we can use argocd cluster add ==> to add any new managed cluster and namespaces to this argocd instance for example: 
 argocd cluster add $(oc config current-context) --name=in-cluster --in-cluster --system-namespace=cicd --namespace=dev
+//or you can add the dev namespace from the argocd GUI ==> Settings ==> Clusters
 ```
 ```
 //label the dev namespace to be managed by argocd
@@ -91,7 +92,8 @@ oc label namespace dev argocd.argoproj.io/managed-by=openshift-gitops
 oc label namespace cicd argocd.argoproj.io/managed-by=openshift-gitops
 
 //Add role binding to the user argocd-argocd-application-controller so argocd can manage the dev namespace
-oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/role-binding-for-dev.yaml
+//oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/role-binding-for-dev.yaml
+oc policy add-role-to-user edit system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller -n dev
 
 //Note: you may need to delete one of the in-cluster from the GUI and add the namespace dev to the remaining one so the output looks like:
 argocd cluster list                                                                                           
@@ -101,8 +103,8 @@ https://kubernetes.default.svc (2 namespaces)  in-cluster  1.21     Successful
 Now, install our argocd applications by executing the following commands: 
 
 ```
-oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/maven-app-gitops.yaml -n cicd
-oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml -n cicd
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/maven-app-gitops.yaml -n openshift-gitops
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/dotnet-app-gitops.yaml -n openshift-gitops
 
 ```
 
@@ -153,7 +155,7 @@ argocd app sync dotnet-app-gitops
 
 You can also install the 3rd example which is the sample serverless demo by the executing the following command:
 ```
-oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/serverless-maven-app-gitops.yaml -n cicd
+oc apply -f https://raw.githubusercontent.com/osa-ora/gitops-sample/main/argocd/serverless-maven-app-gitops.yaml -n openshift-gitops
 ```
 
 
